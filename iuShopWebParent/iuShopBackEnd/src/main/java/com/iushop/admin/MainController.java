@@ -11,8 +11,8 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping("/h")
-    public String h2(){
-        return "templates/index.html";
-    }
+//    @GetMapping("/h")
+//    public String h2(){
+//        return "templates/index.html";
+//    }
 }
