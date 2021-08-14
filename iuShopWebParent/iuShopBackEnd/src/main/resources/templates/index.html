@@ -14,11 +14,14 @@
 <body>
     <div class="container-fluid">
         <div>
-            <nav class="navbar navbar-expand navbar-light" style="background-color: #1cdb64;">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #1cdb64;">
                 <a class="navbar-brand" th:href="@{/}">
                     <img th:src="@{/images/logo.png}" alt="iuShop Logo" width="60" height="33"/>
                 </a>
-                <div class="collapse navbar-collapse">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="topNavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item" >
                             <a class="nav-link" th:href="@{/users}">Users</a>
@@ -60,6 +63,7 @@
         </div>
 
         <div>
+            <br />
             <h1>Hi, Welcome to iuShop Admin Control Panel</h1>
         </div>
         <div>
