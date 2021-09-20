@@ -101,4 +101,21 @@ public class UserRepositoryTest {
         userRepo.deleteById(userId);
     }
 
+    @Test
+    public void testGetUserByEmail(){
+        String testedEmail = "ahmohamed49u@gmail.com";
+        User userByEmail = userRepo.getUserByEmail(testedEmail);
+        assertThat(userByEmail).isNotNull();
+    }
+
+
+    @Test
+    public void testCountById() {
+        int userid = 16;
+        long contById = userRepo.countById(userid);
+        User theUser = userRepo.findById(userid).get();
+        System.out.println(">>>>>>>>: "+contById);
+        System.out.println(">>>>>>>>: "+theUser);
+        assertThat(contById).isNotNull().isEqualTo(1);
+    }
 }
