@@ -1,17 +1,21 @@
 package com.iushop.admin.user;
 
+import com.iushop.admin.FileUploadUtil;
 import com.iushop.common.entity.Role;
 import com.iushop.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -38,11 +42,22 @@ public class UserController {
     }
 
     @PostMapping("/users/save")
-    public String saveUser(User theUser, RedirectAttributes redirectAttributes){
-//        User theUser = new User();
-        userService.saveUserToDb(theUser);
-        redirectAttributes.addFlashAttribute("message_saved", "The user has been saved successfully");
-        System.out.println(theUser.toString());
+    public String saveUser(User theUser, RedirectAttributes redirectAttributes,
+                           @RequestParam("user-image") MultipartFile multipartFile) throws IOException {
+
+        if(!multipartFile.isEmpty()) {
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            theUser.setPhotos(fileName);
+            User savedUser = userService.saveUserToDb(theUser);
+            String uploadDir = "user-photos/" + savedUser.getId();
+            FileUploadUtil.cleanDir(uploadDir);
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            redirectAttributes.addFlashAttribute("message_saved", "The user has been saved successfully");
+        } else {
+            if (theUser.getPhotos().isEmpty())
+                theUser.setPhotos(null);
+            userService.saveUserToDb(theUser);
+        }
         return "redirect:/users";
     }
 
@@ -74,6 +89,18 @@ public class UserController {
         catch (UserNotFoundException e) {
             redirectAttributes.addFlashAttribute("message_edit", e.getMessage());
         }
+        return "redirect:/users";
+    }
+
+    @GetMapping("/users/{id}/enabled/{status}")
+    public String updateEnabledStatus(@PathVariable(value = "id") Integer uid,
+                                      @PathVariable(value="status") boolean status,
+                                      RedirectAttributes redirectAttributes){
+
+        userService.updateEnabledStatus(uid, status);
+        String isEnabled = status ? "enabled" : "disabled";
+        String message = "The userId "+ uid + " is "+ isEnabled + " successfully";
+        redirectAttributes.addFlashAttribute("message_enabled" , message);
         return "redirect:/users";
     }
 

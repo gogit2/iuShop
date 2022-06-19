@@ -108,14 +108,23 @@ public class UserRepositoryTest {
         assertThat(userByEmail).isNotNull();
     }
 
-
     @Test
     public void testCountById() {
-        int userid = 16;
+        int userid = 3;
         long contById = userRepo.countById(userid);
         User theUser = userRepo.findById(userid).get();
         System.out.println(">>>>>>>>: "+contById);
         System.out.println(">>>>>>>>: "+theUser);
         assertThat(contById).isNotNull().isEqualTo(1);
     }
+
+    // Test updateStatus
+    @Test
+    public void testUpdateEnabledStatus(){
+        Integer userId = 2 ;
+        userRepo.updateEnabledStatus(userId, false);
+    }
+
+
+
 }

@@ -8,10 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -31,9 +33,21 @@ public class UserService {
         return (List<Role>) roleRepo.findAll();
     }
 
-    public void saveUserToDb(User theUser) {
-        encodePassword(theUser);
-        userRepo.save(theUser);
+    public User saveUserToDb(User theUser) {
+        boolean isUpdatingUser = (theUser.getId() != null);
+
+        if (isUpdatingUser){
+            User existingUser = userRepo.findById(theUser.getId()).get();
+            if(theUser.getPassword().isEmpty()){
+                theUser.setPassword(existingUser.getPassword());
+            }else {
+                encodePassword(theUser);
+            }
+        }else {
+            encodePassword(theUser);
+        }
+
+        return userRepo.save(theUser);
     }
 
     private void encodePassword(User user){
@@ -65,6 +79,10 @@ public class UserService {
         }else {
             userRepo.deleteById(id);
         }
+    }
+
+    public void updateEnabledStatus(Integer userId, boolean status){
+        userRepo.updateEnabledStatus(userId, status);
     }
 
 
