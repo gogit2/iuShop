@@ -39,12 +39,15 @@ public class UserService {
         return (List<Role>) roleRepo.findAll();
     }
 
-    public Page<User> listByPage (int pageNum, String sortFiled, String sortDir){
+    public Page<User> listByPage (int pageNum, String sortFiled, String sortDir, String keyword){
 
         Sort sort = Sort.by(sortFiled);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-
         Pageable pageable = PageRequest.of(pageNum - 1 , USERS_BER_PAGE, sort);
+
+        if (keyword != null)
+            return userRepo.findAll(keyword, pageable);
+
         return userRepo.findAll(pageable);
     }
 
