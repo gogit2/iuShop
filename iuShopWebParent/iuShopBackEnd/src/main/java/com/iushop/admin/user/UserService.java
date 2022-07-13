@@ -3,6 +3,10 @@ package com.iushop.admin.user;
 import com.iushop.common.entity.Role;
 import com.iushop.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +19,8 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
+
+    public static final int USERS_BER_PAGE = 5;
 
     @Autowired
     private UserRepository userRepo;
@@ -31,6 +37,15 @@ public class UserService {
 
     public List<Role> listAllRoles(){
         return (List<Role>) roleRepo.findAll();
+    }
+
+    public Page<User> listByPage (int pageNum, String sortFiled, String sortDir){
+
+        Sort sort = Sort.by(sortFiled);
+        sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
+
+        Pageable pageable = PageRequest.of(pageNum - 1 , USERS_BER_PAGE, sort);
+        return userRepo.findAll(pageable);
     }
 
     public User saveUserToDb(User theUser) {
