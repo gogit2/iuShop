@@ -85,7 +85,12 @@ public class UserController {
                 theUser.setPhotos(null);
             userService.saveUserToDb(theUser);
         }
-        return "redirect:/users";
+        return getRedirectURLtoAffectedUser(theUser);
+    }
+
+    public String getRedirectURLtoAffectedUser(User user){
+        String firstPartOfUniqueEmail = user.getEmail().split("@")[0];
+        return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword="+firstPartOfUniqueEmail;
     }
 
     @GetMapping("/users/edit/{id}")
