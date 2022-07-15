@@ -66,13 +66,13 @@
 
         <div>
             <h2>Manage Users</h2>
-            <a th:href="@{/users/new}">Create New User</a>
+            <a th:href="@{/users/new}" class="fa-solid fa-user-plus fa-2x icon-silver" title="Create New User"></a>
             &nbsp;|&nbsp;
-            <a th:href="@{/users/export/csv}">Export to CSV</a>
+            <a th:href="@{/users/export/csv}" class="fa-solid fa-file-csv fa-2x icon-gray" title="Export to CSV" ></a>
             &nbsp;|&nbsp;
-            <a th:href="@{/users/export/excel}">Export to Excel</a>
+            <a th:href="@{/users/export/excel}" class="fa-solid fa-file-excel fa-2x icon-silver" title="Export to Excel"></a>
             &nbsp;|&nbsp;
-            <a th:href="@{/users/export/pdf}">Export to PDF</a>
+            <a th:href="@{/users/export/pdf}" class="fa-solid fa-file-pdf fa-2x icon-gray" title="Export to PDF"></a>
         </div>
 
         <div th:if="${message_saved != null}" class="alert alert-success text-center">
@@ -93,9 +93,13 @@
                 Filter:&nbsp;&nbsp;
                 <input type="search" name="keyword" th:value="${keyword}" class="form-control" required/>
                 &nbsp;&nbsp;
-                <input type="submit" value="search" class="btn btn-primary" />
+                <button type="submit" title="Search" class="btn btn-primary" >
+                    <i class="fa-solid fa-magnifying-glass icon-white" ></i>
+                </button>
                 &nbsp;&nbsp;
-                <input type="button" value="clear" class="btn btn-secondary" onclick="clearFilter()" />
+                <button type="button" title="Clear" class="btn btn-secondary" onclick="clearFilter()" >
+                    <i class="fa-solid fa-delete-left icon-white"></i>
+                </button>
                 &nbsp;&nbsp;
             </form>
         </div>
