@@ -5,3 +5,21 @@
 *.icon-green_header {color: #39C26D}
 *.icon-red_delete {color: #ea4133}
 *.icon-gray {color: gray}
+
+@media only screen and (max-device-width: 768px){
+    /* small screen */
+    div.full-details { display: none }
+    div.less-details { display: block; }
+}
+
+@media only screen and (max-device-width: 768px) and (max-width: 1024px){
+    /* medium screen */
+    div.full-details { display: block; }
+    div.less-details { display: none; }
+}
+
+@media only screen and (min-device-width: 1024px){
+    /* small screen */
+    div.full-details { display: block; }
+    div.less-details { display: none; }
+}
