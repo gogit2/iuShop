@@ -11,8 +11,8 @@ public class MainController {
         return "index";
     }
 
-//    @GetMapping("/h")
-//    public String h2(){
-//        return "templates/index.html";
-//    }
+    @GetMapping("/login")
+    public String viewLoginPage(){
+        return "login";
+    }
 }
