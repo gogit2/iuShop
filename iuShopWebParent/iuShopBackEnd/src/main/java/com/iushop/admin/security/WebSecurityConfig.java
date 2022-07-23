@@ -49,7 +49,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .logout()
-                    .permitAll();
+                    .permitAll()
+                .and()
+                .rememberMe().key("fixedKey_123_CookieStillValidEvenYouRestartTheApp");
     }
 
     @Override
