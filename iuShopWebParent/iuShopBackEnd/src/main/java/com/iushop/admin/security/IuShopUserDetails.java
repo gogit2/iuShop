@@ -61,4 +61,8 @@ public class IuShopUserDetails implements UserDetails {
     public boolean isEnabled() {
         return user.getEnabled();
     }
+
+    public String getFullname(){
+        return user.getFullName();
+    }
 }
