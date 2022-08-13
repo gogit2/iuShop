@@ -55,6 +55,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown"
                        sec:authentication="principal.fullname" ></a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" th:href="@{/account}" >Update Account Details</a>
                         <a class="dropdown-item" href="" id="logoutLink">Logout</a>
                     </div>
                 </li>
