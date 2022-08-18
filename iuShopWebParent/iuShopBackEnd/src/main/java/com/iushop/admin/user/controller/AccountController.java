@@ -1,7 +1,8 @@
-package com.iushop.admin.user;
+package com.iushop.admin.user.controller;
 
 import com.iushop.admin.FileUploadUtil;
 import com.iushop.admin.security.IuShopUserDetails;
+import com.iushop.admin.user.UserService;
 import com.iushop.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +29,7 @@ public class AccountController {
         User theLoggedUser = userService.getByEmail(email);
         model.addAttribute("user", theLoggedUser);
 
-        return "account-form";
+        return "users/account-form";
     }
 
     @PostMapping("/account/update")

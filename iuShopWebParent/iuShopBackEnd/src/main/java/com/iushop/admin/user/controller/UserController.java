@@ -1,6 +1,8 @@
-package com.iushop.admin.user;
+package com.iushop.admin.user.controller;
 
 import com.iushop.admin.FileUploadUtil;
+import com.iushop.admin.user.UserNotFoundException;
+import com.iushop.admin.user.UserService;
 import com.iushop.admin.user.export.UserCsvExporter;
 import com.iushop.admin.user.export.UserExcelExporter;
 import com.iushop.admin.user.export.UserPdfExporter;
@@ -58,7 +60,7 @@ public class UserController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("keyword", keyword);
-        return "users";
+        return "users/users";
     }
 
     @GetMapping("/users/new")
@@ -68,7 +70,7 @@ public class UserController {
         model.addAttribute("user", theUser);
         model.addAttribute("listRoles", listRoles);
         model.addAttribute("pageTitle", "Create New user");
-        return "user-form";
+        return "users/user-form";
     }
 
     @PostMapping("/users/save")
@@ -106,7 +108,7 @@ public class UserController {
             model.addAttribute("pageTitle", "Edit user id_"+uid);
             model.addAttribute("user", theUser);
             model.addAttribute("listRoles", listRoles);
-            return "user-form";
+            return "users/user-form";
         } catch (UserNotFoundException e) {
            redirectAttributes.addFlashAttribute("message_edit", e.getMessage());
            return "redirect:/users";
